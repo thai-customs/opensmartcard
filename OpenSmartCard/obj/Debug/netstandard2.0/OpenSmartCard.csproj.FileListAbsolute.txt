@@ -1,0 +1,9 @@
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\bin\Debug\netstandard2.0\OpenSmartCard.deps.json
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\bin\Debug\netstandard2.0\OpenSmartCard.dll
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\bin\Debug\netstandard2.0\OpenSmartCard.pdb
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.csprojAssemblyReference.cache
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.csproj.CoreCompileInputs.cache
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.AssemblyInfoInputs.cache
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.AssemblyInfo.cs
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.dll
+C:\Users\Win10\repos\zerocopy\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.pdb
