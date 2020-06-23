@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Win10\\repos\\zerocopy\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {}
+    "C:\\Users\\Win10\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Win10\\repos\\zerocopy\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {
+    "C:\\Users\\Win10\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Win10\\repos\\zerocopy\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
+        "projectUniqueName": "C:\\Users\\Win10\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
         "projectName": "OpenSmartCard",
-        "projectPath": "C:\\Users\\Win10\\repos\\zerocopy\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
+        "projectPath": "C:\\Users\\Win10\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
         "packagesPath": "C:\\Users\\Win10\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Win10\\repos\\zerocopy\\opensmartcard\\OpenSmartCard\\obj\\",
+        "outputPath": "C:\\Users\\Win10\\repos\\opensmartcard\\OpenSmartCard\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Win10\\AppData\\Roaming\\NuGet\\NuGet.Config",

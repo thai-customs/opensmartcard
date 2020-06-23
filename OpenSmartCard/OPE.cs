@@ -141,7 +141,7 @@ namespace OpenSmartCard
             try {
                 int status = 0;
                 int remain = 0;
-                int rc = VerifyPIN(0, 1, ref remain, ref status);
+                int rc = VerifyPIN(1, 0, ref remain, ref status);
                 if (rc != 0) throw new Exception($"rc={rc}&status={status}");
                 return $"status={status}&remain={remain}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
@@ -169,10 +169,10 @@ namespace OpenSmartCard
             try {
                 int status = 0;
                 int requestLen = 255;
-                StringBuilder envelope = new StringBuilder("", requestLen);
-                int rc = EnvelopeGMSx(keyId, crypto, crypto.Length, envelope, ref requestLen, ref status);
+                StringBuilder request = new StringBuilder("", 255);
+                int rc = EnvelopeGMSx(keyId, crypto, crypto.Length, request, ref requestLen, ref status);
                 if (rc != 0) throw new Exception($"rc={rc}&status={status}");
-                return $"status={status}&envelope={envelope.ToString()}";
+                return $"status={status}&envelope={request.ToString()}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
         [ComVisible(true)]
