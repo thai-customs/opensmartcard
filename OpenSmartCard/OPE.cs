@@ -179,7 +179,7 @@ namespace OpenSmartCard
         public void TestError(string msg) {
             throw new Exception(msg.ToString());
         }
-        [ComVisible(false)]
+        [ComVisible(true)]
         public string GetVersion() {
             return "Tinnakrit";
         }
