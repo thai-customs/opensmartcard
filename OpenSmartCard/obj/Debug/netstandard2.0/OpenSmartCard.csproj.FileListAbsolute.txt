@@ -24,3 +24,12 @@ C:\Users\108895\repos\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenS
 C:\Users\108895\repos\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.AssemblyInfo.cs
 C:\Users\108895\repos\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.dll
 C:\Users\108895\repos\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.pdb
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\bin\Debug\netstandard2.0\OpenSmartCard.deps.json
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\bin\Debug\netstandard2.0\OpenSmartCard.dll
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\bin\Debug\netstandard2.0\OpenSmartCard.pdb
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.csprojAssemblyReference.cache
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.AssemblyInfoInputs.cache
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.AssemblyInfo.cs
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.csproj.CoreCompileInputs.cache
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.dll
+C:\Users\Duckky\repo\opensmartcard\OpenSmartCard\obj\Debug\netstandard2.0\OpenSmartCard.pdb
