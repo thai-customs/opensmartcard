@@ -1,10 +1,19 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using Newtonsoft.Json;
 namespace OpenSmartCard
 {
     public class OPE
     {
+        public class ExceptionJSON {
+            public int rc { get; }
+            public int status { get; }
+            public ExceptionJSON (int rc, int status) {
+                this.rc = rc;
+                this.status = status;
+            }
+        }
         [ComVisible(false)]
         private static int GetHexVal(char hex) {
             int val = (int)hex;
@@ -25,6 +34,10 @@ namespace OpenSmartCard
             }
             return arr;
         }
+        public class ListReaderResult {
+            public int status { get; set; }
+            public string readers { get; set; }
+        }
         [DllImport("scapi_ope.dll")]
         public static extern short ListReader(StringBuilder List_Reader, ref int status);
         [ComVisible(true)]
@@ -32,12 +45,18 @@ namespace OpenSmartCard
         {
             try
             {
+                ListReaderResult result = new ListReaderResult();
                 int status = 0;
                 StringBuilder str = new StringBuilder("", 1000);
                 int rc = ListReader(str, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
-                return $"status={status}&readers={Uri.EscapeUriString(str.ToString())}";
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
+                result.status = status;
+                result.readers = str.ToString();
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class OpenReaderResult {
+            public string status { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short OpenReader(string name, ref int status);
@@ -46,10 +65,11 @@ namespace OpenSmartCard
         {
             try
             {
+                OpenReaderResult result = new OpenReaderResult();
                 int status = 0;
                 int rc = OpenReader(readerName, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
-                return $"status={status}";
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
         [DllImport("scapi_ope.dll")]
@@ -66,7 +86,7 @@ namespace OpenSmartCard
             try
             {
                 int rc = GetCardStatus(atr, ref atrLen, ref timeout, ref cardType, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}&atr={Uri.EscapeUriString(atr.ToString())}&atrLen={atrLen}&timeout={timeout}&cardType={cardType}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -80,7 +100,7 @@ namespace OpenSmartCard
                 int status = 0;
                 byte[] aid = Str2Bin(hex);
                 int rc = SelectApplet(ref aid[0], aid.Length, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -96,7 +116,7 @@ namespace OpenSmartCard
                 const int dataSize = 13;
                 StringBuilder dataBuf = new StringBuilder("", 15);
                 int rc = ReadData(blockId, offset, dataSize, dataBuf, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}&data={dataBuf.ToString()}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -113,7 +133,7 @@ namespace OpenSmartCard
                 StringBuilder prefix = new StringBuilder("", 20);
                 StringBuilder person = new StringBuilder("", 20);
                 int rc = GetCardInfo(cardSN, chip, os, prefix, person, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}&cardSN={cardSN.ToString()}&chip={chip.ToString()}&os={os.ToString()}&prefix={prefix.ToString()}&person={person.ToString()}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -129,7 +149,7 @@ namespace OpenSmartCard
                 int authorize = 0;
                 StringBuilder laserNumber = new StringBuilder("", 33);
                 int rc = GetInfoADM(version, ref state, ref authorize, laserNumber, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}&version={version.ToString()}&state={state}&authorize={authorize}&laserNumber={laserNumber}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -142,7 +162,7 @@ namespace OpenSmartCard
                 int status = 0;
                 int remain = 0;
                 int rc = VerifyPIN(1, 0, ref remain, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}&remain={remain}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -157,7 +177,7 @@ namespace OpenSmartCard
                 int cryptoSize = 0;
                 int matchStatus = 0;
                 int rc = GetMatchStatus(1, 0, random, random.Length, crypto, ref cryptoSize, ref matchStatus, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}&crypto={crypto.ToString()}&matchStatus={matchStatus}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -171,17 +191,26 @@ namespace OpenSmartCard
                 int requestLen = 255;
                 StringBuilder request = new StringBuilder("", 255);
                 int rc = EnvelopeGMSx(keyId, crypto, crypto.Length, request, ref requestLen, ref status);
-                if (rc != 0) throw new Exception($"rc={rc}&status={status}");
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 return $"status={status}&envelope={request.ToString()}";
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
         [ComVisible(true)]
-        public void TestError(string msg) {
-            throw new Exception(msg.ToString());
+        public void TestError() {
+            throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(0, 0)));
+        }
+        public class Version {
+            public string autor { get; set; }
+            public float version { get; set; }
+            public int build { get; set; }
         }
         [ComVisible(true)]
         public string GetVersion() {
-            return "Tinnakrit";
+            Version version = new Version();
+            version.autor = "Tinnakrit";
+            version.version = 2.41f;
+            version.build = 1;
+            return JsonConvert.SerializeObject(version);
         }
     }
 }
