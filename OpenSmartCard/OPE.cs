@@ -55,8 +55,8 @@ namespace OpenSmartCard
                 return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
-        public class OpenReaderResult {
-            public string status { get; set; }
+        public class OpeResult {
+            public int status { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short OpenReader(string name, ref int status);
@@ -65,12 +65,19 @@ namespace OpenSmartCard
         {
             try
             {
-                OpenReaderResult result = new OpenReaderResult();
+                OpeResult result = new OpeResult();
                 int status = 0;
                 int rc = OpenReader(readerName, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
+                result.status = status;
                 return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class GetCardStatusResult {
+            public int status { get; set; }
+            public string atr { get; set; }
+            public int timeout { get; set; }
+            public int cardType { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short GetCardStatus(StringBuilder atr, ref int atrLen, ref int timeOut, ref int cardType, ref int status);
@@ -78,6 +85,7 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string GetCardStatus()
         {
+            GetCardStatusResult result = new GetCardStatusResult();
             StringBuilder atr = new StringBuilder("", 100);
             int status = 0;
             int atrLen = 0;
@@ -87,7 +95,11 @@ namespace OpenSmartCard
             {
                 int rc = GetCardStatus(atr, ref atrLen, ref timeout, ref cardType, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}&atr={Uri.EscapeUriString(atr.ToString())}&atrLen={atrLen}&timeout={timeout}&cardType={cardType}";
+                result.status = status;
+                result.atr = atr.ToString().Substring(0, atrLen);
+                result.timeout = timeout;
+                result.cardType = cardType;
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
         // not test
@@ -97,12 +109,18 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string SelectApplet(string hex) {
             try {
+                OpeResult result = new OpeResult();
                 int status = 0;
                 byte[] aid = Str2Bin(hex);
                 int rc = SelectApplet(ref aid[0], aid.Length, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}";
+                result.status = status;
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class ReadDataResult {
+            public int status { get; set; }
+            public string data { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short ReadData(int blockId, int offset, int dataSize, StringBuilder dataBuf, ref int status);
@@ -110,6 +128,7 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string ReadData() {
             try {
+                ReadDataResult result = new ReadDataResult();
                 int status = 0;
                 const int blockId = 0;
                 const int offset = 4;
@@ -117,8 +136,18 @@ namespace OpenSmartCard
                 StringBuilder dataBuf = new StringBuilder("", 15);
                 int rc = ReadData(blockId, offset, dataSize, dataBuf, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}&data={dataBuf.ToString()}";
+                result.status = status;
+                result.data = dataBuf.ToString().Substring(0, dataSize);
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class GetCardInfoResult {
+            public int status { get; set; }
+            public string cardSN { get; set; }
+            public string chip { get; set; }
+            public string os { get; set; }
+            public string prefix { get; set; }
+            public string person { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short GetCardInfo(StringBuilder cardSN, StringBuilder chip, StringBuilder os, StringBuilder prefix, StringBuilder person, ref int status);
@@ -126,16 +155,30 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string GetCardInfo() {
             try {
+                GetCardInfoResult result = new GetCardInfoResult();
                 int status = 0;
-                StringBuilder cardSN = new StringBuilder("", 16);
+                StringBuilder cardSN = new StringBuilder("", 20);
                 StringBuilder chip = new StringBuilder("", 20);
                 StringBuilder os = new StringBuilder("", 20);
                 StringBuilder prefix = new StringBuilder("", 20);
                 StringBuilder person = new StringBuilder("", 20);
                 int rc = GetCardInfo(cardSN, chip, os, prefix, person, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}&cardSN={cardSN.ToString()}&chip={chip.ToString()}&os={os.ToString()}&prefix={prefix.ToString()}&person={person.ToString()}";
+                result.status = status;
+                result.cardSN = cardSN.ToString().Substring(0, 16);
+                result.chip = chip.ToString().Substring(0, 8);
+                result.os = os.ToString().Substring(0, 12);
+                result.prefix = prefix.ToString().Substring(0, 16);
+                result.person = person.ToString().Substring(0, 16);
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class GetInfoADMResult {
+            public int status { get; set; }
+            public string version { get; set; }
+            public int state { get; set; }
+            public int authorize { get; set; }
+            public string laserNumber { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short GetInfoADM(StringBuilder version, ref int state, ref int authorize, StringBuilder laserNumber, ref int status);
@@ -143,6 +186,7 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string GetInfoADM() {
             try {
+                GetInfoADMResult result = new GetInfoADMResult();
                 int status = 0;
                 StringBuilder version = new StringBuilder("", 5);
                 int state = 0;
@@ -150,8 +194,17 @@ namespace OpenSmartCard
                 StringBuilder laserNumber = new StringBuilder("", 33);
                 int rc = GetInfoADM(version, ref state, ref authorize, laserNumber, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}&version={version.ToString()}&state={state}&authorize={authorize}&laserNumber={laserNumber}";
+                result.status = status;
+                result.version = version.ToString();
+                result.state = state;
+                result.authorize = authorize;
+                result.laserNumber = laserNumber.ToString();
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class VerifyPINResult {
+            public int status { get; set; }
+            public int remain { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short VerifyPIN(int pinId, int shareData, ref int remain, ref int status);
@@ -159,12 +212,20 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string VerifyPIN() {
             try {
+                VerifyPINResult result = new VerifyPINResult();
                 int status = 0;
                 int remain = 0;
                 int rc = VerifyPIN(1, 0, ref remain, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}&remain={remain}";
+                result.status = status;
+                result.remain = remain;
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class GetMatchStatusResult {
+            public int status { get; set; }
+            public string crypto { get; set; }
+            public int matchStatus { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short GetMatchStatus(int type, int mode, string random, int randomSize, StringBuilder crypto, ref int cryptoSize, ref int matchStatus, ref int status);
@@ -172,14 +233,22 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string GetMatchStatus(string random) {
             try {
+                GetMatchStatusResult result = new GetMatchStatusResult();
                 int status = 0;
                 StringBuilder crypto = new StringBuilder("", 64);
                 int cryptoSize = 0;
                 int matchStatus = 0;
                 int rc = GetMatchStatus(1, 0, random, random.Length, crypto, ref cryptoSize, ref matchStatus, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}&crypto={crypto.ToString()}&matchStatus={matchStatus}";
+                result.status = status;
+                result.crypto = crypto.ToString().Substring(0, cryptoSize);
+                result.matchStatus = matchStatus;
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class EnvelopeGMSxResult {
+            public int status { get; set; }
+            public string envelope { get; set; }
         }
         [DllImport("scapi_ope.dll")]
         public static extern short EnvelopeGMSx(int keyId, string crypto, int cryptoLen, StringBuilder request, ref int requestLen, ref int status);
@@ -187,12 +256,15 @@ namespace OpenSmartCard
         [ComVisible(true)]
         public string EnvelopeGMSx(int keyId, string crypto) {
             try {
+                EnvelopeGMSxResult result = new EnvelopeGMSxResult();
                 int status = 0;
                 int requestLen = 255;
                 StringBuilder request = new StringBuilder("", 255);
                 int rc = EnvelopeGMSx(keyId, crypto, crypto.Length, request, ref requestLen, ref status);
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
-                return $"status={status}&envelope={request.ToString()}";
+                result.status = status;
+                result.envelope = request.ToString().Substring(0, requestLen);
+                return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
         [ComVisible(true)]

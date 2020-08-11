@@ -221,24 +221,30 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Duckky\\.nuget\\packages\\": {}
+    "C:\\Users\\108895\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Duckky\\repo\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
+      "projectUniqueName": "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
       "projectName": "OpenSmartCard",
-      "projectPath": "C:\\Users\\Duckky\\repo\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
-      "packagesPath": "C:\\Users\\Duckky\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Duckky\\repo\\opensmartcard\\OpenSmartCard\\obj\\",
+      "projectPath": "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
+      "packagesPath": "C:\\Users\\108895\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Duckky\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\108895\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -276,7 +282,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
