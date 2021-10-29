@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {}
+    "C:\\Users\\108895\\Repositories\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {}
   },
   "projects": {
-    "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {
+    "C:\\Users\\108895\\Repositories\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
+        "projectUniqueName": "C:\\Users\\108895\\Repositories\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
         "projectName": "OpenSmartCard",
-        "projectPath": "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
+        "projectPath": "C:\\Users\\108895\\Repositories\\opensmartcard\\OpenSmartCard\\OpenSmartCard.csproj",
         "packagesPath": "C:\\Users\\108895\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\108895\\repos\\opensmartcard\\OpenSmartCard\\obj\\",
+        "outputPath": "C:\\Users\\108895\\Repositories\\opensmartcard\\OpenSmartCard\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,6 +41,10 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "DllExport": {
+              "target": "Package",
+              "version": "[1.7.4, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

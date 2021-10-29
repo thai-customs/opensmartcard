@@ -12,4 +12,7 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgDllExport Condition=" '$(PkgDllExport)' == '' ">C:\Users\108895\.nuget\packages\dllexport\1.7.4</PkgDllExport>
+  </PropertyGroup>
 </Project>
