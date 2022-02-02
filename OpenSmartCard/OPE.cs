@@ -272,15 +272,15 @@ namespace OpenSmartCard
             throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(0, 0)));
         }
         public class Version {
-            public string autor { get; set; }
-            public float version { get; set; }
+            public string author { get; set; }
+            public string version { get; set; }
             public int build { get; set; }
         }
         [ComVisible(true)]
         public string GetVersion() {
             Version version = new Version();
-            version.autor = "Tinnakrit";
-            version.version = 2.41f;
+            version.author = "Tinnakrit";
+            version.version = "7.2.2.2";
             version.build = 1;
             return JsonConvert.SerializeObject(version);
         }
