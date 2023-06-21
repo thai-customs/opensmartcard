@@ -252,7 +252,13 @@ namespace OpenSmartCard
         }
         [DllImport("scapi_ope.dll")]
         public static extern short EnvelopeGMSx(int keyId, string crypto, int cryptoLen, StringBuilder request, ref int requestLen, ref int status);
-        // EnvelopeGMSx Lib "scapi_ope.dll" (ByVal key_id As Integer, ByVal cryptogram As String, ByVal cryptogram_len As Integer, ByVal request As String, ByRef request_len As Integer, ByRef status As Integer) As Short
+        /** Public Declare Function EnvelopeGMSx Lib "scapi_ope.dll"(
+        * ByVal key_id As Integer,
+        * ByVal cryptogram As String,
+        * ByVal cryptogram_len As Integer,
+        * ByVal request As String,
+        * ByRef request_len As Integer,
+        * ByRef status As Integer) As Short */
         [ComVisible(true)]
         public string EnvelopeGMSx(int keyId, string crypto) {
             try {
@@ -264,6 +270,32 @@ namespace OpenSmartCard
                 if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
                 result.status = status;
                 result.envelope = request.ToString().Substring(0, requestLen);
+                return JsonConvert.SerializeObject(result);
+            } catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        public class GetRMACResult {
+            public int status { get; set; }
+            public string rmac { get; set; }
+        }
+        [DllImport("scapi_ope.dll")]
+        public static extern int GetRMAC(string random, int randomSize, StringBuilder crypto, ref int cryptoSize, ref int status);
+        /** Public Declare Function GetRMAC Lib "scapi_ope.dll" (
+        * ByVal ibuf As String,
+        * ByVal ibuf_len As Integer,
+        * ByVal obuf As String,
+        * ByRef obuf_len As Integer,
+        * ByRef status As Integer) As Integer */
+        [ComVisible(true)]
+        public string GetRMAC(string random) {
+            try {
+                GetRMACResult result = new GetRMACResult();
+                int status = 0;
+                StringBuilder crypto = new StringBuilder("", 64);
+                int cryptoSize = 0;
+                int rc = GetRMAC(random, random.Length, crypto, ref cryptoSize, ref status);
+                if (rc != 0) throw new Exception(JsonConvert.SerializeObject(new ExceptionJSON(rc, status)));
+                result.status = status;
+                result.rmac = crypto.ToString().Substring(0, cryptoSize);
                 return JsonConvert.SerializeObject(result);
             } catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -280,7 +312,7 @@ namespace OpenSmartCard
         public string GetVersion() {
             Version version = new Version();
             version.author = "Tinnakrit";
-            version.version = "7.2.2.2";
+            version.version = "7.2.2.3";
             version.build = 1;
             return JsonConvert.SerializeObject(version);
         }
