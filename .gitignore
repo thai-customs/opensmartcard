@@ -1,4 +1,5 @@
-
 *.cache
 *.dll
 *.pdb
+OpenSmartCard/bin
+OpenSmartCard/obj
