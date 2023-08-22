@@ -306,14 +306,14 @@ namespace OpenSmartCard
         public class Version {
             public string author { get; set; }
             public string version { get; set; }
-            public int build { get; set; }
+            public string forSCAPIOPEVersion { get; set; }
         }
         [ComVisible(true)]
         public string GetVersion() {
             Version version = new Version();
             version.author = "Tinnakrit";
-            version.version = "7.2.2.3";
-            version.build = 1;
+            version.version = "2.0.0";
+            version.forSCAPIOPEVersion = "7.2.2.3";
             return JsonConvert.SerializeObject(version);
         }
     }
