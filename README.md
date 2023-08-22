@@ -8,11 +8,13 @@ Linkage Center ActiveX Interface DLL for `sca_ope.dll`.
 
 
 ## Building Project
+
 ```
 dotnet build
-``` 
+```
 
 ## Features
+
 **Standard Functions**
 - [ ] LicenseManager
 - [ ] SetDebugOption
@@ -37,6 +39,7 @@ dotnet build
 - [ ] ChangePIN_OBJ
 - [ ] OverwritePIN1_OBJ
 - [x] EnvelopeGMSx
+
 **SASM Functions**
 - [ ] GenerateMAC
 - [ ] VerifyMAC
