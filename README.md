@@ -10,7 +10,10 @@ Linkage Center ActiveX Interface DLL for `sca_ope.dll`.
 ## Building Project
 
 ```
+# build for test
 dotnet build
+# build for production
+dotnet publish
 ```
 
 ## Features
