@@ -312,7 +312,7 @@ namespace OpenSmartCard
         public string GetVersion() {
             Version version = new Version();
             version.author = "Tinnakrit";
-            version.version = "2.1.0";
+            version.version = "2.2.0";
             version.forSCAPIOPEVersion = "7.2.2.3";
             return JsonConvert.SerializeObject(version);
         }
